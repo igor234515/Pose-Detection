@@ -25,3 +25,9 @@
 
 
 Примеры видео: <https://disk.yandex.ru/a/f2qYBEjeIvBkRw>
+
+
+## ОЦенка моделей Pose_Estimation
+
+* Move_Net - плохая модель. теряет человека и переключается на других людей
+* 
