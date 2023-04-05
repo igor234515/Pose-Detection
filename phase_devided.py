@@ -1,5 +1,4 @@
 import cv2
-import time
 import os
 
 # Подготовка толчка ногой - птн
@@ -64,6 +63,10 @@ def read_timecodes(file_txt:str,video: str,save_dir:str):
             # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             name=os.path.join(save_dir_pose,os.path.basename(video).split('.')[0]+'frame_'+str(num)+'.jpg')
 
+            time=round(num/fps,3)
+            org=(image.shape[1]-200,100)
+            image = cv2.putText(image, str(time), org, cv2.FONT_HERSHEY_SIMPLEX,
+                                2, (0,255,0), 2, cv2.LINE_AA)
             cv2.imwrite(name,image)
 
             if num>=stop_frame:
@@ -80,3 +83,4 @@ def read_timecodes(file_txt:str,video: str,save_dir:str):
         num+=1
     print('end function work')
 
+# read_timecodes(r"D:\hockey\phase_1909.txt",r"D:\hockey\IMG_1909.MOV",r"D:\hockey\pose")
