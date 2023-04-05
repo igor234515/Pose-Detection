@@ -70,7 +70,7 @@ def read_timecodes(file_txt:str,video: str,save_dir:str):
             cv2.imwrite(name,image)
 
             if num>=stop_frame:
-                print(start_pose,stop_frame)
+                print("save here:",start_pose,'frame stop saving',stop_frame)
                 start_index=(start_index+1)%3
                 start_pose=queue[start_index]
                 txt_next_index+=1
