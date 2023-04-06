@@ -9,20 +9,29 @@ points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulde
             'left_ear','right_ear','right_foot_mid','right_foot_front',
            'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
 
-def on_image(dict_points,image,points=points):
-    with open(colors_file,'r') as f:
-        colors=json.load(f)
+
+
+def on_image(dict_points,image,points):
+    # global colors
+    # TODO( file error if use it in other directory. ex. side_camera)
+    with open(colors_file, 'r') as f:
+        colors = json.load(f)
+    i=0
     for p in points:
         x,y,probably= dict_points[p]
         #TODO переход из 16 бит в РГБ косой. Надо чтобы cv2 понимла 16 бит или переписать файл
         color=colors[p][1:]
         color=tuple(int(color[i:i+2], 16) for i in (0, 2, 4))
         if (x,y)!=(0.0,0.0):
-            print(x,y)
-            print(color)
+            # print(x,y)
+            # print(color)
             image=cv2.circle(image, (int(x),int(y)), radius=2, color=color, thickness=2)
+            # отрисовка названия точки
+            image=cv2.putText(image,str(i), (int(x),int(y)), cv2.FONT_HERSHEY_SIMPLEX,
+                        1, color, 1, cv2.LINE_AA)
         else:
             print(p,"  don't find")
+        i+=1
     return image
 def all_image(path_image,path_dict):
     #TODO Прописать сохраниение и визуализацию по флагу в аргументах функции
