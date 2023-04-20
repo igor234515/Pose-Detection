@@ -83,4 +83,5 @@ def read_timecodes(file_txt:str,video: str,save_dir:str):
         num+=1
     print('end function work')
 
-# read_timecodes(r"D:\hockey\phase_1909.txt",r"D:\hockey\IMG_1909.MOV",r"D:\hockey\pose")
+read_timecodes(r"D:\hockey\phase_1904_left.txt",r"D:\hockey\IMG_1904.MOV",r"D:\hockey\pose_fron_left")
+read_timecodes(r"D:\hockey\phase_1904_right.txt",r"D:\hockey\IMG_1904.MOV",r"D:\hockey\pose_fron_right")

@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import json_to_points
 import math
+import matplotlib.pyplot as plt
 import show_points
 import os
 # os.chdir("..")
@@ -60,7 +61,7 @@ def angles(image,file_point_old,show_res=True):
     gr_vec=np.array([groin_x,0])-np.array([groin_x,groin_y])
     br_vec=np.array([br_x,br_y])-np.array([groin_x,groin_y])
     angle_body=angle_of_vectors(br_vec[0],br_vec[1],gr_vec[0],gr_vec[1])
-    print('angle back:',angle_body)
+    # print('angle back:',angle_body)
 
     # отрисовка угла колена
     hip1_x, hip1_y, hip1_p = int_points(dict_points[points[11]])
@@ -83,35 +84,74 @@ def angles(image,file_point_old,show_res=True):
     image = cv2.line(image, (ankle2_x, ankle2_y), (knee2_x, knee2_y), (0, 255, 255), thickness=2)
 
     angle_leg_1 = angle_of_vectors(up_leg_vec_1[0], up_leg_vec_1[1], down_leg_vec_1[0], down_leg_vec_1[1])
-    print('angle_leg_left:', 180-angle_leg_1)
+    # print('angle_leg_left:', 180-angle_leg_1)
 
     angle_leg_2 = angle_of_vectors(up_leg_vec_2[0], up_leg_vec_2[1], down_leg_vec_2[0], down_leg_vec_2[1])
-    print('angle_leg_right:', 180-angle_leg_2)
+    # print('angle_leg_right:', 180-angle_leg_2)
 
     if show_res:
         string='angle back:   '+ str(round(angle_body,1))
 
         ord_y=image.shape[0]-300
-        ord_x=image.shape[1]-500
+        ord_x=image.shape[1]-550
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.5, (0, 255, 0), 1, cv2.LINE_AA)
+                            0.5, (0, 0, 0), 1, cv2.LINE_AA)
 
-        string = 'angle_leg_left:      ' + str(round(180 - angle_leg_1,1))
+        string = 'angle_leg_left:      ' + str(round( angle_leg_1,1))
 
         ord_y = image.shape[0] - 260
-        ord_x = image.shape[1] - 500
+        ord_x = image.shape[1] - 550
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.5, (255, 255, 0), 1, cv2.LINE_AA)
+                            0.5, (0, 0, 0), 1, cv2.LINE_AA)
 
-        string = 'angle_leg_right:     ' + str(round(180 - angle_leg_2,1))
+        string = 'angle_leg_right:      ' + str(round( angle_leg_2,1))
 
         ord_y = image.shape[0] - 230
-        ord_x = image.shape[1] - 500
+        ord_x = image.shape[1] - 550
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.5, (0, 255,255), 1, cv2.LINE_AA)
+                            0.5, (0, 0,0), 1, cv2.LINE_AA)
 
 
     return image
+
+def foot_angle(top,down):
+    x_top,y_top,p_top=int_points(top)
+    x_down,y_down, p_down=int_points(down)
+    vec1=np.array([x_down, x_down]) - np.array([x_top, y_top])
+    vec2=np.array([x_down, 0])
+    return angle_of_vectors(vec1[0],vec1[1],vec2[0],vec2[1])
+
+
+def opor_leg(list_image,list_file_point_old):
+    global points
+    left_angles=np.zeros(len(list_image))
+    right_angles = np.zeros(len(list_image))
+    for i in range(len(list_image)):
+        image=list_image[i]
+        file_point_old=list_file_point_old[i]
+        dict_points = json_to_points.json_to_points(file_point_old)
+        left_foot_top=dict_points[points[19]]
+        left_foot_down = dict_points[points[21]]
+        right_foot_top=dict_points[points[22]]
+        right_foot_down = dict_points[points[24]]
+        left_angles[i]=left_foot_top[0]
+        right_angles[i]=right_foot_top[0]
+        # left_foot_angle=foot_angle(left_foot_top,left_foot_down)
+        # right_foot_angle=foot_angle(right_foot_top,right_foot_down)
+        # left_angles[i]=left_foot_angle
+        # right_angles[i]=right_foot_angle
+    plt.figure()
+    plt.plot(right_angles,'r')
+    plt.plot(left_angles,'g')
+    plt.legend(['right','left'])
+    plt.show()
+    # for check developer. delete after
+    name=r'D:\hockey\plots_foots'
+    # inp=input()
+    # name=os.path.join(name,inp+'.jpg')
+    # plt.savefig(name)
+
+
 
 # for
 # image=cv2.imread(r"D:\hockey\pose\tdn\IMG_1909frame_277.jpg")

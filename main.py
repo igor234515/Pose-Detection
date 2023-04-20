@@ -23,6 +23,15 @@ points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulde
 def main():
     path_image = r'D:\hockey\pose\tdn'
     path_dict = r'D:\hockey\json_1909\json_1909'
+
+    # path_image = r'D:\hockey\pose_fron_left\tdn'
+    # path_dict = r'D:\hockey\json_1904\json_1904'
+
+
+
+    list_image=[]
+    list_points=[]
+    last_num_image=0
     for n in os.listdir(path_image):
         name=os.path.join(path_image,n)
         image=cv2.imread(name)
@@ -30,8 +39,6 @@ def main():
         #TODO( сделать реализацию получше)
         num_frame=n.split('.')[0].split('_')[-1]
         file_list=os.listdir(path_dict)
-        # shablon='IMG_1909_000000000000_keypoints.json'
-        # print(file_list[0].split['_'])
         file_num_rand=file_list[0].split('_')[-2]
         file_num_=file_num_rand[:-len(num_frame)]+num_frame
         file_point_old=file_list[0].replace(file_num_rand,file_num_)
@@ -43,6 +50,17 @@ def main():
         cv2.imshow('show', new_image)
         cv2.waitKey()
 
-main()
+        # for opr leg
+        num=int(name.split('.')[-2].split('_')[-1])
+        print(num)
+        if num-last_num_image>1:
+            side.opor_leg(list_image,list_points)
+            list_image=[]
+            list_points=[]
+            print('eeeeeeeeeeeeeeeeeee')
+        else:
+            list_image.append(name)
+            list_points.append(file_point_old)
+        last_num_image=num
 
-# print(points[8])
+main()
