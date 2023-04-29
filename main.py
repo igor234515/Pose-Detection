@@ -98,7 +98,7 @@ def main(path_image,path_dict,camera):
 
 
 
-i=1
+i=0
 camers=['side','front']
 if i==0:
     path_image = r'D:\hockey\pose\tdn'
