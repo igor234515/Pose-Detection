@@ -22,6 +22,7 @@ points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulde
            'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
 def main(path_image,path_dict,camera):
     if camera=='side':
+        support_leg=180
         phases=side.define_opr_leg(path_image,path_dict)
         ind_phases=0
 
@@ -41,15 +42,20 @@ def main(path_image,path_dict,camera):
             file_point_old=os.path.join(path_dict,file_point_old)
             dict_points = json_to_points.json_to_points(file_point_old)
             new_image = on_image(dict_points, image, points=points)
-            new_image=side.angles(new_image,dict_points,False)
             # for opr leg
             num=int(name.split('.')[-2].split('_')[-1])
             print(num)
             if num-last_num_image>1:
                 ind_phases+=1
+                string='angle support: ' + str(support_leg)+'. NEED 180'
+                ord_y = new_image.shape[0] - 400
+                ord_x = new_image.shape[1] - 550
+                new_image = cv2.putText(new_image , string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
+                                    0.5, (0, 0,255), 1, cv2.LINE_AA)
             else:
                 ph=phases[ind_phases]
                 new_image = side.write_opr_leg(new_image, dict_points,ph)
+                new_image,support_leg = side.angles(new_image, dict_points,ph, True)
             last_num_image=num
 
             new_image=cv2.resize(new_image,dsize=(int(image.shape[1]*0.8),int(image.shape[0]*0.8)))
@@ -73,6 +79,7 @@ def main(path_image,path_dict,camera):
             new_image = on_image(dict_points, image, points=points)
             new_image = front.angles(new_image, dict_points)
             new_image = front.leg(new_image, dict_points)
+            new_image = front.elbow(new_image, dict_points)
             # for opr leg
 
             # num = int(name.split('.')[-2].split('_')[-1])
@@ -83,7 +90,7 @@ def main(path_image,path_dict,camera):
             #     ph = phases[ind_phases]
             #     new_image = side.write_opr_leg(new_image, dict_points, ph)
             # last_num_image = num
-
+            # print(image)
             new_image = cv2.resize(new_image, dsize=(int(image.shape[1] * 0.8), int(image.shape[0] * 0.8)))
             cv2.imshow('show', new_image)
             cv2.waitKey()
@@ -91,9 +98,14 @@ def main(path_image,path_dict,camera):
 
 
 
-# path_image = r'D:\hockey\pose\tdn'
-# path_dict = r'D:\hockey\json_1909\json_1909'
+i=1
 camers=['side','front']
-path_image = r'D:\hockey\all\ptn'
-path_dict = r'D:\hockey\json_1904\json_1904'
-main(path_image,path_dict,camers[1])
+if i==0:
+    path_image = r'D:\hockey\pose\tdn'
+    path_dict = r'D:\hockey\json_1909\json_1909'
+else:
+
+    path_image = r'D:\hockey\front_all\ptn l'
+    path_dict = r'D:\hockey\json_1904\json_1904'
+
+main(path_image,path_dict,camers[i])

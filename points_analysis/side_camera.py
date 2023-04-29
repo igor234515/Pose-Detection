@@ -41,7 +41,7 @@ points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulde
             'groin','left_hip','left_knee','left_ankle','right_hip','right_knee','right_ankle','left_eye','right_eye',
             'left_ear','right_ear','right_foot_mid','right_foot_front',
            'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
-def angles(image,dict_points,show_res=True):
+def angles(image,dict_points,ph,show_res=True):
     global points
     # получение точек and отрисовка их
 
@@ -88,6 +88,7 @@ def angles(image,dict_points,show_res=True):
     # print('angle_leg_right:', 180-angle_leg_2)
 
     if show_res:
+
         image = cv2.line(image, (groin_x, groin_y), (groin_x, 0), (0, 255, 0), thickness=2)
         image = cv2.line(image, (groin_x, groin_y), (br_x, br_y), (0, 255, 0), thickness=2)
 
@@ -97,29 +98,46 @@ def angles(image,dict_points,show_res=True):
         image = cv2.line(image, (hip2_x, hip2_y), (knee2_x, knee2_y), (0, 255, 255), thickness=2)
         image = cv2.line(image, (ankle2_x, ankle2_y), (knee2_x, knee2_y), (0, 255, 255), thickness=2)
 
-        string='angle back:   '+ str(round(angle_body,1))
+        string='angle back:   '+ str(round(angle_body,1)) + ' Good - not more 10'
 
         ord_y=image.shape[0]-300
         ord_x=image.shape[1]-550
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 0, 0), 1, cv2.LINE_AA)
+        if ph == -1:
+            support_leg=round( angle_leg_1,1)
+            not_suport_leg=round( angle_leg_2,1)
+            string = 'support leg:      ' + str(round( angle_leg_1,1)) + ". Good interval (80:110)"
 
-        string = 'angle_leg_left:      ' + str(round( angle_leg_1,1))
+            ord_y = image.shape[0] - 260
+            ord_x = image.shape[1] - 550
+            image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
+                                0.5, (0, 0, 0), 1, cv2.LINE_AA)
 
-        ord_y = image.shape[0] - 260
-        ord_x = image.shape[1] - 550
-        image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.5, (0, 0, 0), 1, cv2.LINE_AA)
+            string = 'not support leg:      ' + str(round( angle_leg_2,1)) + ". Good interval (80:110)"
 
-        string = 'angle_leg_right:      ' + str(round( angle_leg_2,1))
+            ord_y = image.shape[0] - 230
+            ord_x = image.shape[1] - 550
+            image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
+                                0.5, (0, 0,0), 1, cv2.LINE_AA)
 
-        ord_y = image.shape[0] - 230
-        ord_x = image.shape[1] - 550
-        image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.5, (0, 0,0), 1, cv2.LINE_AA)
+        else:
+            support_leg = round(angle_leg_2, 1)
+            not_suport_leg = round(angle_leg_1, 1)
+            string = 'not support leg:      ' + str(round(angle_leg_1, 1)) + ". Good interval (80:110)"
 
+            ord_y = image.shape[0] - 260
+            ord_x = image.shape[1] - 550
+            image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
+                                0.5, (0, 0, 0), 1, cv2.LINE_AA)
 
-    return image
+            string = 'support leg:      ' + str(round(angle_leg_2, 1)) + ". Good interval (80:110)"
+
+            ord_y = image.shape[0] - 230
+            ord_x = image.shape[1] - 550
+            image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
+                                0.5, (0, 0, 0), 1, cv2.LINE_AA)
+    return (image,support_leg)
 
 def foot_angle(top,down):
     x_top,y_top,p_top=int_points(top)
@@ -252,9 +270,9 @@ def write_opr_leg(image,dict_points,ph,show_res=True):
     vec_2 = np.array([knee[0], knee[1]]) - np.array([nose[0], nose[1]])
     angle = angle_of_vectors(vec_1[0], vec_1[1], vec_2[0], vec_2[1])
     if show_res:
-        string='angle nose:   '+ str(round(angle,1))
+        string='angle nose:   '+ str(round(angle,1))+ ". NEED 180"
 
-        ord_y=image.shape[0]-250
+        ord_y=image.shape[0]-350
         ord_x=image.shape[1]-550
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 0, 0), 1, cv2.LINE_AA)

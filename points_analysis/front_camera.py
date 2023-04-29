@@ -118,14 +118,14 @@ def angles(image,dict_points,show_res=True,part=1,opr_leg=1):
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 0, 0), 1, cv2.LINE_AA)
 
-        string = 'angle_leg_left:      ' + str(round( angle_leg_1,1))
+        string = 'angle_leg_right:      ' + str(round( angle_leg_1,1))
 
         ord_y = image.shape[0] - 260
         ord_x = image.shape[1] - 550
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 0, 0), 1, cv2.LINE_AA)
 
-        string = 'angle_leg_right:      ' + str(round( angle_leg_2,1))
+        string = 'angle_leg_left:      ' + str(round( angle_leg_2,1))
 
         ord_y = image.shape[0] - 230
         ord_x = image.shape[1] - 550
@@ -151,3 +151,21 @@ def leg(image,dict_points,show_res=True,part=1,opr_leg=1):
         ord_x = image.shape[1] - 550
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 0, 0), 1, cv2.LINE_AA)
+        return image
+def elbow(image,dict_points,show_res=True,part=1,opr_leg=1):
+    hip1_x, hip1_y, hip1_p = dict_points[points[11]]
+    hip2_x, hip2_y, hip2_p = dict_points[points[12]]
+    groin_x, groin_y = int((hip1_x + hip2_x) / 2), int((hip1_y + hip2_y) / 2)
+    elbow1_x, elbow1_y, elbow1_p = int_points(dict_points[points[7]])
+    elbow2_x, elbow2_y, elbow2_p = int_points(dict_points[points[8]])
+    if (elbow1_x-groin_x)*(elbow2_x-groin_x)<0:
+        res='good'
+    else:
+        res='bad'
+    if show_res:
+        string='the location of the elbow is ' + res
+        ord_y = image.shape[0] - 360
+        ord_x = image.shape[1] - 550
+        image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
+                            0.5, (0, 0, 0), 1, cv2.LINE_AA)
+        return image
