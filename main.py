@@ -32,6 +32,8 @@ def main(path_image,path_dict,camera,file_save):
         list_points=[]
         last_num_image=0
         start_num=0
+        if os.path.exists(file_save):
+            os.remove(file_save)
         for n in os.listdir(path_image):
             name=os.path.join(path_image,n)
             image=cv2.imread(name)
