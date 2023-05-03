@@ -4,6 +4,7 @@ import os
 from show_points import on_image
 import json_to_points
 import points_analysis.front_camera as front
+import estimations.estim_side as estim_side
 colors_file=r'other/colors.json'
 # igor's points
 
@@ -20,16 +21,18 @@ points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulde
             'groin','left_hip','left_knee','left_ankle','right_hip','right_knee','right_ankle','left_eye','right_eye',
             'left_ear','right_ear','right_foot_mid','right_foot_front',
            'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
-def main(path_image,path_dict,camera):
+def main(path_image,path_dict,camera,file_save):
     if camera=='side':
-        support_leg=180
+        support_leg_array=[]
+        nose_array=[]
         phases=side.define_opr_leg(path_image,path_dict)
         ind_phases=0
 
         list_image=[]
         list_points=[]
         last_num_image=0
-        for n in os.listdir(path_image ):
+        start_num=0
+        for n in os.listdir(path_image):
             name=os.path.join(path_image,n)
             image=cv2.imread(name)
             # номер кадра
@@ -44,18 +47,30 @@ def main(path_image,path_dict,camera):
             new_image = on_image(dict_points, image, points=points)
             # for opr leg
             num=int(name.split('.')[-2].split('_')[-1])
-            print(num)
+
             if num-last_num_image>1:
+                start_num=num
                 ind_phases+=1
-                string='angle support: ' + str(support_leg)+'. NEED 180'
-                ord_y = new_image.shape[0] - 400
-                ord_x = new_image.shape[1] - 550
-                new_image = cv2.putText(new_image , string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
-                                    0.5, (0, 0,255), 1, cv2.LINE_AA)
+                # try:
+                #     string=f'nose:{nose_array[:3]}   sup_st:  {support_leg_array[:3]}    sup_fin:  {support_leg_array[-3:]}'
+                # except IndexError:
+                #     string='I am broken'
+                # nose_array=[]
+                # support_leg_array=[]
+                # ord_y = new_image.shape[0] - 400
+                # ord_x = new_image.shape[1] - 1000
+                # new_image = cv2.putText(new_image , string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
+                #                     0.5, (0, 0,255), 1, cv2.LINE_AA)
+                try:
+                    estim_side.estim(file_save, nose_array, support_leg_array, (start_num,last_num_image))
+                except IndexError:
+                    print('not enough points')
             else:
                 ph=phases[ind_phases]
-                new_image = side.write_opr_leg(new_image, dict_points,ph)
+                new_image,nose = side.write_opr_leg(new_image, dict_points,ph)
                 new_image,support_leg = side.angles(new_image, dict_points,ph, True)
+                support_leg_array.append(support_leg)
+                nose_array.append(nose)
             last_num_image=num
 
             new_image=cv2.resize(new_image,dsize=(int(image.shape[1]*0.8),int(image.shape[0]*0.8)))
@@ -101,11 +116,11 @@ def main(path_image,path_dict,camera):
 i=0
 camers=['side','front']
 if i==0:
-    path_image = r'D:\hockey\pose\tdn'
+    path_image = r'D:\hockey\pose_side\tdn'
     path_dict = r'D:\hockey\json_1909\json_1909'
 else:
 
     path_image = r'D:\hockey\front_all\ptn l'
     path_dict = r'D:\hockey\json_1904\json_1904'
-
-main(path_image,path_dict,camers[i])
+file_save=r'D:\hockey\estim.json'
+main(path_image,path_dict,camers[i],file_save)

@@ -276,7 +276,7 @@ def write_opr_leg(image,dict_points,ph,show_res=True):
         ord_x=image.shape[1]-550
         image = cv2.putText(image, string, (ord_x, ord_y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 0, 0), 1, cv2.LINE_AA)
-    return image
+    return (image,round(angle,1))
 
 
 

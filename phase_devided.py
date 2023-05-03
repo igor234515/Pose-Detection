@@ -183,9 +183,10 @@ def read_timecodes_dl(file_txt:str,video: str,save_dir:str):
                 save_dir_pose = os.path.join(save_dir, english_pose)
         num+=1
     print('end function work')
+read_timecodes(r"D:\hockey\phase_1909.txt",r"D:\hockey\IMG_1909.MOV",r"D:\hockey\pose_side")
 # read_timecodes(r"D:\hockey\phase_1904_left.txt",r"D:\hockey\IMG_1904.MOV",r"D:\hockey\pose_fron_left")
 # read_timecodes(r"D:\hockey\phase_1904_right.txt",r"D:\hockey\IMG_1904.MOV",r"D:\hockey\pose_fron_right")
 # read_timecodes(r"D:\hockey\none.txt",r"D:\hockey\IMG_1904.MOV",r"D:\hockey\all")
-merge_file_txt(r"D:\hockey\phase_1904_left.txt",r"D:\hockey\phase_1904_right.txt",
-               r"D:\hockey\phase_1904_all.txt")
-read_timecodes_dl(r"D:\hockey\phase_1904_all.txt",r"D:\hockey\IMG_1904.MOV",r"D:\hockey\front_all")
+# merge_file_txt(r"D:\hockey\phase_1904_left.txt",r"D:\hockey\phase_1904_right.txt",
+#                r"D:\hockey\phase_1904_all.txt")
+# read_timecodes_dl(r"D:\hockey\phase_1904_all.txt",r"D:\hockey\IMG_1904.MOV",r"D:\hockey\front_all")
