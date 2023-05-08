@@ -7,6 +7,9 @@ from sklearn.linear_model import LinearRegression
 from scipy import stats
 import show_points
 import os
+import sys
+sys.path.append("./other")
+from points_for_hard_model import points
 # os.chdir("..")
 
 
@@ -37,10 +40,10 @@ def angle_of_vectors(a, b, c, d):
 #           'left_big_toe', 'left_small_toe', 'left_heel']
 
 # robert's points
-points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulder','right_elbow','right_brush',
-            'groin','left_hip','left_knee','left_ankle','right_hip','right_knee','right_ankle','left_eye','right_eye',
-            'left_ear','right_ear','right_foot_mid','right_foot_front',
-           'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
+#points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulder','right_elbow','right_brush',
+#            'groin','left_hip','left_knee','left_ankle','right_hip','right_knee','right_ankle','left_eye','right_eye',
+#            'left_ear','right_ear','right_foot_mid','right_foot_front',
+#           'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
 def angles(image,dict_points,ph,show_res=True):
     global points
     # получение точек and отрисовка их

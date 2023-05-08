@@ -6,6 +6,10 @@ import json_to_points
 import points_analysis.front_camera as front
 import estimations.estim_side as estim_side
 colors_file=r'other/colors.json'
+import sys
+sys.path.append("./other")
+from points_for_hard_model import points
+
 # igor's points
 
 # points=['nose', 'right_eye', 'left_eye', 'right_ear',
@@ -17,10 +21,10 @@ colors_file=r'other/colors.json'
 #           'left_big_toe', 'left_small_toe', 'left_heel']
 
 # robert's points
-points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulder','right_elbow','right_brush',
-            'groin','left_hip','left_knee','left_ankle','right_hip','right_knee','right_ankle','left_eye','right_eye',
-            'left_ear','right_ear','right_foot_mid','right_foot_front',
-           'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
+#points=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulder','right_elbow','right_brush',
+#            'groin','left_hip','left_knee','left_ankle','right_hip','right_knee','right_ankle','left_eye','right_eye',
+#            'left_ear','right_ear','right_foot_mid','right_foot_front',
+#           'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
 def main(path_image,path_dict,camera,file_save):
     if camera=='side':
         support_leg_array=[]

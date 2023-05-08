@@ -1,7 +1,10 @@
 import json
+import sys
+sys.path.append("./other")
+from points_for_hard_model import points
 
 # igor's points
-
+keyList = points
 # keyList = ['nose', 'right_eye', 'left_eye', 'right_ear',
 #           'left_ear', 'right_shoulder', 'left_shoulder',
 #           'right_elbow', 'left_elbow', 'right_brush',
@@ -12,10 +15,10 @@ import json
 
 
 #robert's points
-keyList=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulder','right_elbow','right_brush',
-            'groin','left_hip','left_knee','left_ankle','right_hip','right_knee','right_ankle','left_eye','right_eye',
-            'left_ear','right_ear','right_foot_mid','right_foot_front',
-           'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
+#keyList=['chin',"breast",'left_shoulder','left_elbow','left_brush','right_shoulder','right_elbow','right_brush',
+#            'groin','left_hip','left_knee','left_ankle','right_hip','right_knee','right_ankle','left_eye','right_eye',
+#            'left_ear','right_ear','right_foot_mid','right_foot_front',
+#           'right_foot_back','left_foot_mid','left_foot_front','left_foot_back']
 
 def json_to_points(file:str):
     '''

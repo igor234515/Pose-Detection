@@ -1,2 +1,27 @@
-{"chin": "#065C06", "breast": "#767206", "left_shoulder": "#9C2905", "left_elbow": "#D03303", "left_brush": "#FF3C00", "right_shoulder": "#346102", "right_elbow": "#569F02", "right_brush": "#84F700", "groin": "#00F7D6", "left_hip": "#014A7A", "left_knee": "#0065A8", "left_ankle": "#008DEB", "right_hip": "#19046E", "right_knee": "#2501B5", "right_ankle": "#3300FF", "left_eye": "#22FF00", "right_eye": "#22FF00", "left_ear": "#22FF00", "right_ear": "#22FF00", "right_foot_mid": "#F700FF", "right_foot_front": "#F700FF", "right_foot_back": "#F700FF", "left_foot_mid": "#7B3D7D", "left_foot_front": "#7B3D7D", "left_foot_back": "#7B3D7D"}
-
+{
+  "nose": "#065C06",
+  "left_eye": "#767206",
+  "right_eye": "#9C2905",
+  "left_ear": "#D03303",
+  "right_ear": "#FF3C00",
+  "left_shoulder": "#346102",
+  "right_shoulder": "#569F02",
+  "left_elbow": "#84F700",
+  "right_elbow": "#00F7D6",
+  "left_brush": "#014A7A",
+  "right_brush": "#0065A8",
+  "left_hip": "#008DEB",
+  "right_hip": "#19046E",
+  "left_knee": "#2501B5",
+  "right_knee": "#3300FF",
+  "left_ankle": "#22FF00",
+  "right_ankle": "#22FF00",
+  "breast": "#22FF00",
+  "top": "#22FF00",
+  "left_big_toe": "#F700FF",
+  "left_small_toe": "#F700FF",
+  "left_heel": "#F700FF",
+  "right_big_toe": "#7B3D7D",
+  "right_small_toe": "#7B3D7D",
+  "right_heel": "#7B3D7D"
+}
